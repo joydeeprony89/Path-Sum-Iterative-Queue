@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Path_Sum
 {
@@ -18,7 +19,8 @@ namespace Path_Sum
       root.right.right.right = new TreeNode(1);
 
       Solution s = new Solution();
-      s.HasPathSum(root, 22);
+      var answer = s.HasPathSum_(root, 22);
+      Console.WriteLine(answer);
     }
   }
 
@@ -56,6 +58,13 @@ namespace Path_Sum
           q.Enqueue((node.right, sum - node.right.val));
       }
       return false;
+    }
+
+    public bool HasPathSum_(TreeNode root, int targetSum)
+    {
+      if (root == null) return false;
+      if (root.left == null && root.right == null && targetSum - root.val == 0) return true;
+      return HasPathSum_(root.left, targetSum - root.left.val) || HasPathSum_(root.right, targetSum - root.right.val);
     }
   }
 }
